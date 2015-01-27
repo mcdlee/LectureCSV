@@ -1,6 +1,8 @@
 # import member and timetable
-member <- read.csv("member.csv", fileEncoding="big5")
-timing <- read.csv("timing.csv", fileEncoding="big5")
+member <- read.csv("conf/member.csv", fileEncoding="big5")
+timing <- read.csv("conf/timing.csv", fileEncoding="big5")
+type <- read.csv("conf/type-list.csv", fileEncoding="big5")
+city <- read.csv("conf/city.csv", fileEncoding="big5")
 
 # For choice of member
 member_choice <- member$number
@@ -9,6 +11,14 @@ names(member_choice) <- member$name
 # For choice of timing
 timing_choice <- timing$number
 names(timing_choice) <- timing$type
+
+# For type
+type_choice <- type$id
+names(type_choice) <- type$classification
+
+# For city
+city_choice <- sprintf("%.2d", city$id)
+names(city_choice) <- city$city
 
 filtered <- function(cond, table){
   A <- subset(table, number %in% cond)
@@ -24,16 +34,16 @@ ROCdate <- function(date) {
 }
 
 
-old_form <- function(lec_number, lec_name, lec_date, member_table){
+old_form <- function(lec_number, lec_name, lec_type, lec_date, lec_time, lec_city, member_table){
   B <- data.frame(member_table$id,
                   lec_name,
                   lec_date,
                   member_table$name,
-                  "6", "83", "80", "1",
+                  "6", lec_type, lec_city, "1",
                   lec_date,
-                  "1", "1",
+                  lec_time$digitalCredit + lec_time$physicalCredit, "1",
                   "", "", "", "",
-                  "2", "0", "1",
+                  "2", lec_time$digitalCredit, lec_time$physicalCredit,
                   lec_number)
   colnames(B) <- c("*身分證字號",
                    "*名稱",
@@ -48,7 +58,7 @@ old_form <- function(lec_number, lec_name, lec_date, member_table){
   return(B)
 }
 
-new_form <- function(lec_number, lec_name, lec_date, lec_time, member_table){
+new_form <- function(lec_number, lec_name, lec_type, lec_date, lec_time, lec_city, member_table){
   C <- data.frame(member_table$id,
                   lec_name,
                   lec_date,
@@ -56,10 +66,10 @@ new_form <- function(lec_number, lec_name, lec_date, lec_time, member_table){
                   lec_date,
                   lec_time$to,
                   member_table$name,
-                  "6", "83", "80", "1",
-                  "1", "1",
+                  "6", lec_type, lec_city, "1",
+                  lec_time$digitalCredit + lec_time$physicalCredit, "1",
                   "", "", "", "",
-                  "2", "0", "1",
+                  "2", lec_time$digitalCredit, lec_time$physicalCredit,
                   lec_number,
                   lec_date,
                   lec_time$since,

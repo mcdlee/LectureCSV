@@ -4,12 +4,12 @@
 因應 104年 (西元2015年) 中華民國行政院人事行政總處所轄之公務人員終身學習積分批次匯入 *.csv 欄位更動。
 
 
-![Screenshot](screen1.png)
-![Screenshot](screen2.png)
+![Screenshot](screen/screen1.png)
+![Screenshot](screen/screen2.png)
 
 How to use it?
 -----------------------------------------
-1. Edit the following two files: [member.csv](member.csv) and [timing.csv](timing.csv) (Big5 encoding csv)
+1. Edit the following two files: [member.csv](conf/member.csv), [timing.csv](conf/timing.csv), [city.csv](conf/city.csv) and [type-list.csv](conf/type-list.csv) (Big5 encoding csv)
 2. runApp() under R command line environment
 3. Fill the form and press the two "download buttons", and then get the Big5 encoding *.csv files
 

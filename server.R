@@ -5,12 +5,13 @@ shinyServer(function(input, output) {
   
   date <- reactive(ROCdate(input$lec_date))
   
+  
   oldTable <- reactive({
-    return(old_form(input$lec_number, input$lec_name, date(), filtered(input$atten, member)))
+    return(old_form(input$lec_number, input$lec_name, input$lec_type, date(), filtered(input$lec_time, timing), input$lec_city, filtered(input$atten, member)))
   })
   
   newTable <- reactive({
-    return(new_form(input$lec_number, input$lec_name, date(), filtered(input$lec_time, timing), filtered(input$atten, member)))
+    return(new_form(input$lec_number, input$lec_name, input$lec_type, date(), filtered(input$lec_time, timing), input$lec_city, filtered(input$atten, member)))
   })
   
   #output data  
